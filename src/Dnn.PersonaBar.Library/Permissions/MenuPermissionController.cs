@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Caching;
+using Dnn.PersonaBar.Library.Common;
 using Dnn.PersonaBar.Library.Data;
 using Dnn.PersonaBar.Library.Model;
 using Dnn.PersonaBar.Library.Repository;
@@ -326,6 +327,7 @@ namespace Dnn.PersonaBar.Library.Permissions
                             AllowAccess = true
                         };
 
+                        UpgradeLogger.Log($"Calling SaveMenuPermissions API portal: {portalId}, Menu: {menuItem.Identifier}, RoleName: {menuPermissionInfo.RoleName}, RoleId: {menuPermissionInfo.RoleID}");
                         SaveMenuPermissions(portalId, menuItem, menuPermissionInfo);
                     }
                 }

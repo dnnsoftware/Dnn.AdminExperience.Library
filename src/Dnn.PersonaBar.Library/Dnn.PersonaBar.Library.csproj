@@ -95,6 +95,7 @@
     <Compile Include="AppEvents\IAppEvents.cs" />
     <Compile Include="Attributes\AdvancedPermissionAttribute.cs" />
     <Compile Include="Attributes\MenuPermissionAttribute.cs" />
+    <Compile Include="Common\UpgradeLogger.cs" />
     <Compile Include="Common\Utilities.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Containers\IPersonaBarContainer.cs" />

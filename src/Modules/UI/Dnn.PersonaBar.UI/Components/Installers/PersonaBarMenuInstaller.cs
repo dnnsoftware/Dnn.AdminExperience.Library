@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.XPath;
+using Dnn.PersonaBar.Library.Common;
 using Dnn.PersonaBar.Library.Model;
 using Dnn.PersonaBar.Library.Permissions;
 using Dnn.PersonaBar.Library.Repository;
@@ -205,13 +206,16 @@ namespace Dnn.PersonaBar.UI.Components.Installers
 
         private void SaveMenuPermission(MenuItem menuItem, string roleName)
         {
+            UpgradeLogger.Log($"SaveMenuPermission Menu: {menuItem.Identifier}, Role: {roleName}");
             var portals = PortalController.Instance.GetPortals();
             foreach (PortalInfo portal in portals)
             {
+                UpgradeLogger.Log($"In portal: {portal.PortalID}, Name: {portal.PortalName}");
                 var portalId = portal.PortalID;
                 //when default permission already initialized, then package need to save default permission immediately.
                 if (MenuPermissionController.PermissionAlreadyInitialized(portalId))
                 {
+                    UpgradeLogger.Log($"Calling SaveMenuPermission portal: {portal.PortalID}, Name: {portal.PortalName}");
                     MenuPermissionController.SaveMenuDefaultPermissions(portalId, menuItem, roleName);
                 }
             }
