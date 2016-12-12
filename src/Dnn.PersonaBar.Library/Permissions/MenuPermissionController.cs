@@ -241,9 +241,12 @@ namespace Dnn.PersonaBar.Library.Permissions
                         if (!permissionInitialized)
                         {
                             var menuItems = PersonaBarRepository.Instance.GetMenu().AllItems;
+                            UpgradeLogger.Log($"Start Save Default Permissions, All Items Count: {menuItems.Count}");
                             foreach (var menuItem in menuItems)
                             {
+                                UpgradeLogger.Log($"Start Save Default Permissions on Item: {menuItem.Identifier}");
                                 var defaultPermissions = PersonaBarRepository.Instance.GetMenuDefaultPermissions(menuItem.MenuId);
+                                UpgradeLogger.Log($"Exist Default Permissions on Item: {menuItem.Identifier} is \"{defaultPermissions}\"");
                                 if (!string.IsNullOrEmpty(defaultPermissions))
                                 {
                                     foreach (var roleName in defaultPermissions.Split(','))
@@ -254,8 +257,9 @@ namespace Dnn.PersonaBar.Library.Permissions
                                         }
                                     }
                                 }
+                                UpgradeLogger.Log($"End Save Default Permissions on Item: {menuItem.Identifier}");
                             }
-
+                            UpgradeLogger.Log("End Save Default Permissions");
                             SetPermissionIntialized(portalId);
                         }
                     }
