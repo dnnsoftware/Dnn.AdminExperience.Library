@@ -50,7 +50,7 @@ define(['jquery', 'knockout', 'jquery-ui.min', 'css!main/../css/personaBarDialog
 
         /* Class Properties */
         PersonaBarDialog.class = 'PersonaBarDialog';
-        PersonaBarDialog.type  = 'Class';
+        PersonaBarDialog.type = 'Class';
         PersonaBarDialog.active = false; // TODO: Improve dialog with stacked dialogs
 
         /* Private Properties */
@@ -109,16 +109,16 @@ define(['jquery', 'knockout', 'jquery-ui.min', 'css!main/../css/personaBarDialog
 
             _options = options;
 
-            if (!options.width) {_options.width = 650;}
-            if (!options.title) {_options.title = 'Notice';}
-            if (!options.inObject) {_options.inObject = $(document.body);}
-            if (!options.innerTitle) {_options.innerTitle = '';}
-            if (!options.acceptBtnLbl) {_options.acceptBtnLbl = 'Accept';}
-            if (options.showAcceptBtn !== false) {_options.showAcceptBtn = true;}
-            if (!options.cancelBtnLbl) {_options.cancelBtnLbl = 'Cancel';}
-            if (options.showCancelBtn !== false) {_options.showCancelBtn = true;}
-            if (options.animation !== false) {_options.animation = true;}
-            if (options.closeOnAccept !== false) {_options.closeOnAccept = true;}
+            if (!options.width) { _options.width = 650; }
+            if (!options.title) { _options.title = 'Notice'; }
+            if (!options.inObject) { _options.inObject = $(document.body); }
+            if (!options.innerTitle) { _options.innerTitle = ''; }
+            if (!options.acceptBtnLbl) { _options.acceptBtnLbl = 'Accept'; }
+            if (options.showAcceptBtn !== false) { _options.showAcceptBtn = true; }
+            if (!options.cancelBtnLbl) { _options.cancelBtnLbl = 'Cancel'; }
+            if (options.showCancelBtn !== false) { _options.showCancelBtn = true; }
+            if (options.animation !== false) { _options.animation = true; }
+            if (options.closeOnAccept !== false) { _options.closeOnAccept = true; }
 
             _viewModel = {};
 
@@ -154,15 +154,15 @@ define(['jquery', 'knockout', 'jquery-ui.min', 'css!main/../css/personaBarDialog
             setTimeout(function () {
                 _viewModel = {
                     dialogHTML: '',
-                    title:         ko.observable(_options.title),
-                    innerTitle:    ko.observable(_options.innerTitle),
-                    acceptBtnLbl:  ko.observable(_options.acceptBtnLbl),
+                    title: ko.observable(_options.title),
+                    innerTitle: ko.observable(_options.innerTitle),
+                    acceptBtnLbl: ko.observable(_options.acceptBtnLbl),
                     showAcceptBtn: ko.observable(_options.showAcceptBtn),
-                    cancelBtnLbl:  ko.observable(_options.cancelBtnLbl),
+                    cancelBtnLbl: ko.observable(_options.cancelBtnLbl),
                     showCancelBtn: ko.observable(_options.showCancelBtn),
-                    acceptDialog:  acceptDialog,
-                    closeDialog:   closeDialog,
-                    enableAccept:  ko.observable(true)
+                    acceptDialog: acceptDialog,
+                    closeDialog: closeDialog,
+                    enableAccept: ko.observable(true)
                 };
 
                 if (typeof viewModel === 'object') {
@@ -226,11 +226,18 @@ define(['jquery', 'knockout', 'jquery-ui.min', 'css!main/../css/personaBarDialog
             top = 100 + doc.scrollTop() + 'px';
             bottom = '40px';
 
-            _personaBarDialog.css({
-                top: top,
-                'margin-left': left,
-                'margin-bottom': bottom,
-            });
+            if ($(document.body).css('direction') == 'rtl')
+                _personaBarDialog.css({
+                    top: top,
+                    'margin-right': left,
+                    'margin-bottom': bottom,
+                });
+            else
+                _personaBarDialog.css({
+                    top: top,
+                    'margin-left': left,
+                    'margin-bottom': bottom,
+                });
 
             _personaBarDialogMask.css({
                 height: doc.height() + _personaBarDialog.height()
@@ -249,22 +256,22 @@ define(['jquery', 'knockout', 'jquery-ui.min', 'css!main/../css/personaBarDialog
             });
 
             // Close on esc keydown
-            _win.off('keydown.personaBarDialog').on('keydown.personaBarDialog', function(evt) {
+            _win.off('keydown.personaBarDialog').on('keydown.personaBarDialog', function (evt) {
                 if (evt.keyCode === 27) closeDialog();
             });
 
             // Prevent doble scroll from inner dialog and outer window
-            _personaBarDialog.off('DOMMouseScroll mousewheel').on('DOMMouseScroll mousewheel', function(evt) {
+            _personaBarDialog.off('DOMMouseScroll mousewheel').on('DOMMouseScroll mousewheel', function (evt) {
                 var self, scrollTop, scrollHeight, height, delta, up, prevent;
                 self = $(this);
 
-                scrollTop    = this.scrollTop;
+                scrollTop = this.scrollTop;
                 scrollHeight = this.scrollHeight;
-                height       = self.height();
-                delta        = evt.originalEvent.wheelDelta;
+                height = self.height();
+                delta = evt.originalEvent.wheelDelta;
                 up = delta > 0;
 
-                prevent = function() {
+                prevent = function () {
                     evt.stopPropagation();
                     evt.preventDefault();
                     evt.returnValue = false;
@@ -272,7 +279,7 @@ define(['jquery', 'knockout', 'jquery-ui.min', 'css!main/../css/personaBarDialog
                 };
 
                 if (!up && -delta > scrollHeight - height - scrollTop) {
-                   self.scrollTop(scrollHeight);
+                    self.scrollTop(scrollHeight);
                     return prevent();
                 } else if (up && delta > scrollTop) {
                     self.scrollTop(0);
@@ -283,7 +290,7 @@ define(['jquery', 'knockout', 'jquery-ui.min', 'css!main/../css/personaBarDialog
 
         showDialog = function () {
             _personaBarDialogMask.show();
-            if (_options.animation) {_personaBarDialog.fadeIn(100);} else {_personaBarDialog.show();}
+            if (_options.animation) { _personaBarDialog.fadeIn(100); } else { _personaBarDialog.show(); }
         };
 
         updateHeight = function () {
