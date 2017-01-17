@@ -25,11 +25,13 @@ namespace Dnn.PersonaBar.UI.HttpModules
         
         public void Init(HttpApplication application)
         {
+            application.BeginRequest += OnBeginRequest;
+
             if (_hasAppStarted)
             {
                 return;
             }
-
+            
             lock (LockAppStarted)
             {
                 if (_hasAppStarted)
@@ -39,6 +41,18 @@ namespace Dnn.PersonaBar.UI.HttpModules
 
                 ApplicationStart();
                 _hasAppStarted = true;
+            }
+        }
+
+        private void OnBeginRequest(object sender, EventArgs e)
+        {
+            var context = ((HttpApplication)sender).Context;
+
+            if (context.Request.Url.AbsolutePath.Split('/')[1].Equals("admin2", StringComparison.InvariantCultureIgnoreCase))
+            {                
+                // TODO: why Server.Transfer gives a 404?
+                //context.Server.Transfer("~/DesktopModules/Admin/dnn.PersonaBar/StandaloneContainer.aspx", false);
+                context.Server.TransferRequest("~/DesktopModules/Admin/dnn.PersonaBar/StandaloneContainer.aspx", false);
             }
         }
 
