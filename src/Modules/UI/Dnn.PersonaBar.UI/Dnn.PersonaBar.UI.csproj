@@ -147,6 +147,10 @@
     <Import Include="System.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="admin\personaBar\StandaloneContainer.aspx.cs">
+      <DependentUpon>StandaloneContainer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="admin\personaBar\UserControls\PersonaBarContainer.ascx.cs">
       <DependentUpon>PersonaBarContainer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -220,7 +224,9 @@
     <Content Include="admin\personaBar\images\x_thin.svg" />
     <Content Include="admin\personaBar\scripts\contrib\jquery.hoverIntent.min.js" />
     <Content Include="admin\personaBar\scripts\serversummary.js" />
-    <Content Include="admin\personaBar\StandaloneContainer.aspx" />
+    <Content Include="admin\personaBar\StandaloneContainer.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="admin\personaBar\UserControls\PersonaBarContainer.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>

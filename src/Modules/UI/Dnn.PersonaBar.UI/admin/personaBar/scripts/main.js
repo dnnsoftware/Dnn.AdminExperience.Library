@@ -5,7 +5,7 @@
     var cdv = window.parent['personaBarSettings']['buildNumber'];
 
     requirejs.config({
-        baseUrl: 'scripts/contrib/',
+        baseUrl: '/DesktopModules/Admin/Dnn.PersonaBar/scripts/contrib/',
         paths: {
             'templatePath': '../../',
             'cssPath': '../../css/',
@@ -63,8 +63,8 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
         '../persistent', '../eventEmitter', '../gateway', 'domReady!', '../exports/export-bundle'],
     function ($, ko, moment, ut, sf, cf, extension, persistent, eventEmitter, Gateway) {
         var iframe = window.parent.document.getElementById("personaBar-iframe");
-        if (!iframe) return;
-        
+        //if (!iframe) return;
+
         var onTouch = "ontouchstart" in document.documentElement;
         // Checking touch screen for second level menu - the above onTouch won't work on windows tablet - IE I didnt test but read about it.
         var isTouch = ('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0);

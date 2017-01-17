@@ -1,4 +1,5 @@
 (function () {
+    var basePath = '/DesktopModules/Admin/Dnn.PersonaBar/';
     function addCssToHead(css, version) {
         var head = document.getElementsByTagName('head')[0];
         for (var i = 0; i < css.length; i++) {
@@ -13,7 +14,7 @@
     function addJsToBody (js, version) {
         var body = document.getElementsByTagName('body')[0];
         var script = document.createElement('script');
-        script.setAttribute('src', 'scripts/contrib/require.js' + version);
+        script.setAttribute('src', basePath + 'scripts/contrib/require.js' + version);
         script.setAttribute('data-main', js + version);
         body.appendChild(script);
     };
@@ -24,14 +25,14 @@
     var skin = personaBarSettings['skin'];
     var version = (cdv ? '?cdv=' + cdv : '') + (debugMode ? '&t=' + Math.random(): '');
     var styles = [];
-    var mainJs = 'scripts/main.js';
-    var mainCss = 'css/main.css';
+    var mainJs = basePath + 'scripts/main.js';
+    var mainCss = basePath + 'css/main.css';
     if (skin) {
-        mainCss = 'css/' + skin + '.css';
+        mainCss = basePath + 'css/' + skin + '.css';
     }
 
     styles.push(mainCss);
-    styles.push('css/graph.css');
+    styles.push(basePath + 'css/graph.css');
 
     addCssToHead(styles, version);
     addJsToBody(mainJs, version);
