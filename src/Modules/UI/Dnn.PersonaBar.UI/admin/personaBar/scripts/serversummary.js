@@ -27,13 +27,15 @@ define(['jquery', 'knockout', 'jquery.hoverIntent.min'], function ($, ko) {
         return $summary;
     }
     var showServerSummary = function () {
-        mainFrame.style.width = '100%';
+        if (mainFrame) {
+            mainFrame.style.width = '100%';            
+        }
         $('.hoverSummaryMenu, .hovermenu').hide();
         getSummaryContainer().addClass('shown');
     }
 
     var hideServerSummary = function () {
-        if (!$('.hovermenu:visible').length && !$('.socialpanel:visible').length) {
+        if (mainFrame && !$('.hovermenu:visible').length && !$('.socialpanel:visible').length) {
             mainFrame.style.width = personaBarWidth + "px";
         }
         getSummaryContainer().removeClass('shown');
