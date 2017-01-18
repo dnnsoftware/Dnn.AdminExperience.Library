@@ -55,8 +55,7 @@
                     </div>
                         <!-- /ko -->
                 </li>
-                <!-- /ko -->
-                <li id="showsite"><span data-bind="html: resx.nav_Site"></span></li>
+                <!-- /ko -->                
             </ul>
         </div>
     </div>
