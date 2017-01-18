@@ -10,6 +10,7 @@ using DotNetNuke.Framework.JavaScriptLibraries;
 using DotNetNuke.UI.Utilities;
 using DotNetNuke.Web.Client.ClientResourceManagement;
 using Newtonsoft.Json;
+using static System.Web.HttpUtility;
 
 namespace Dnn.PersonaBar.UI.admin.personaBar
 {
@@ -21,6 +22,13 @@ namespace Dnn.PersonaBar.UI.admin.personaBar
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var user = UserController.Instance.GetCurrentUserInfo();
+            if (user.UserID <= 0)
+            {                
+                Response.Redirect($"~/Login?returnurl={UrlEncode("/admin2")}");
+                return;
+            }
+            
             InjectPersonaBar();            
         }
 
