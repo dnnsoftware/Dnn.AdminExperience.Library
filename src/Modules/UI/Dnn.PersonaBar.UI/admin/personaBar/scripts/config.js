@@ -6,7 +6,7 @@ define(['jquery'], function ($) {
 
             var tabId = inIframe ? window.top.dnn.getVar('sf_tabId') : '';
             var siteRoot = inIframe ? window.top.dnn.getVar('sf_siteRoot') : '';
-            var antiForgeryToken = inIframe ? window.top.document.getElementsByName('__RequestVerificationToken')[0].value : '';
+            var antiForgeryToken = inIframe ? window.top.document.getElementsByName('__RequestVerificationToken')[0].value : window.document.getElementsByName('__RequestVerificationToken')[0].value;
 
             var config = $.extend({}, {
                 tabId: tabId,

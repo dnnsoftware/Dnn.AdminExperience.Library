@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Helpers;
 using System.Web.UI;
 using Dnn.PersonaBar.Library.Containers;
 using Dnn.PersonaBar.Library.Controllers;
@@ -20,6 +21,15 @@ namespace Dnn.PersonaBar.UI.admin.personaBar
 
         public string PersonaBarSettings => JsonConvert.SerializeObject(_personaBarContainer.GetConfiguration());
 
+        public void RegisterAjaxAntiForgery()
+        {
+            var ctl = FindControl("ClientResourcesFormBottom");
+            if (ctl != null)
+            {
+                ctl.Controls.Add(new LiteralControl(AntiForgery.GetHtml().ToHtmlString()));
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             var user = UserController.Instance.GetCurrentUserInfo();
@@ -28,7 +38,9 @@ namespace Dnn.PersonaBar.UI.admin.personaBar
                 Response.Redirect($"~/Login?returnurl={UrlEncode("/admin2")}");
                 return;
             }
-            
+
+            RegisterAjaxAntiForgery();
+
             InjectPersonaBar();            
         }
 
