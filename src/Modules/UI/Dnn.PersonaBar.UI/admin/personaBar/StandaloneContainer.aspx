@@ -10,6 +10,7 @@
     </style>
 </head>
 <body>
+<input id="__dnnVariable" runat="server" name="__dnnVariable" type="hidden" autocomplete="off" />
 <div class="personabar" id="personabar">
         <div class="personabarLogo"></div>
         <div id="topLevelMenu">

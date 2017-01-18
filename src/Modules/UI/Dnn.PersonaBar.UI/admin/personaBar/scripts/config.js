@@ -12,7 +12,7 @@ define(['jquery'], function ($) {
                 tabId: tabId,
                 siteRoot: siteRoot,
                 antiForgeryToken: antiForgeryToken
-            }, inIframe ? window.parent['personaBarSettings'] : {});
+            }, inIframe ? window.parent['personaBarSettings'] : window['personaBarSettings']);
 
             return config;   
        } 

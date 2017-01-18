@@ -207,7 +207,9 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                 var moduleName = params.moduleName;
                 var folderName = params.folderName || identifier;
 
-                iframe.style.width = "100%";
+                if (iframe) {
+                    iframe.style.width = "100%";
+                };
                 parentBody.style.overflow = "hidden";
                 body.style.overflow = 'auto';
 
@@ -620,7 +622,9 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
 
                                                 showMenuHandlers.push(setTimeout(function () {
                                                     if ($hoverMenu.css('display') === 'none' && mouseOnButton) {
-                                                        if (!activePath) iframe.style.width = "100%";
+                                                        if (!activePath && iframe) {
+                                                             iframe.style.width = "100%";
+                                                        }
 
                                                         $hoverMenu.css({
                                                             position: 'absolute',
