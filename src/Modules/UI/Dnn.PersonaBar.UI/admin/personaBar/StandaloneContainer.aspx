@@ -12,6 +12,15 @@
 <body>
 <input id="__dnnVariable" runat="server" name="__dnnVariable" type="hidden" autocomplete="off" />
 <asp:placeholder runat="server" ID="ClientResourcesFormBottom" />
+<%--<asp:placeholder runat="server" id="ClientResourceIncludes" />--%>
+<script type="text/javascript">
+    window.dnn = window.dnn || {}
+    window.dnn.getVar = function(key, def) {
+        var value = document.getElementById("__dnnVariable").value;
+        var obj = JSON.parse(value.substr(1).replace(/`/g, '"'));
+        return obj[key] || def;
+    }
+</script>
 <div class="personabar" id="personabar">
         <div class="personabarLogo"></div>
         <div id="topLevelMenu">

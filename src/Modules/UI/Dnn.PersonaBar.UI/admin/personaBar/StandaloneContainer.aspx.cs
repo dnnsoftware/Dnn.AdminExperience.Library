@@ -40,6 +40,8 @@ namespace Dnn.PersonaBar.UI.admin.personaBar
             }
 
             RegisterAjaxAntiForgery();
+            var path = ServicesFramework.GetServiceFrameworkRoot();            
+            ClientAPI.RegisterClientVariable(Page, "sf_siteRoot", path, /*overwrite*/ true);
 
             InjectPersonaBar();            
         }
