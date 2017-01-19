@@ -39,6 +39,11 @@ namespace Dnn.PersonaBar.UI.admin.personaBar
                 return;
             }
 
+            if (_personaBarContainer.Visible)
+            {
+                _personaBarContainer.Initialize(this);
+            }
+
             RegisterAjaxAntiForgery();
             var path = ServicesFramework.GetServiceFrameworkRoot();            
             ClientAPI.RegisterClientVariable(Page, "sf_siteRoot", path, /*overwrite*/ true);

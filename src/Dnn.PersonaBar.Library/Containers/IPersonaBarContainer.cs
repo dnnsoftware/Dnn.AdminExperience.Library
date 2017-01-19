@@ -18,7 +18,7 @@ namespace Dnn.PersonaBar.Library.Containers
         /// Initialize the persona bar container.
         /// </summary>
         /// <param name="personaBarControl">The Persona Bar Container control.</param>
-        void Initialize(UserControl personaBarControl);
+        void Initialize(TemplateControl personaBarControl);
 
         /// <summary>
         /// Get Persona Bar Settings.

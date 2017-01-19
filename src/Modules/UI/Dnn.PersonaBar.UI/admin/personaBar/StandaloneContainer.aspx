@@ -98,6 +98,7 @@
         <img id="close-load-error" class="thin-close-x" src="/DesktopModules/Admin/Dnn.PersonaBar/images/x_thin.svg" alt="">
     </div>
     <!-- end extra -->
+<asp:placeholder runat="server">
     <script type="text/javascript">
         (function injectboostrap() {
             window['personaBarSettings'] = <%=PersonaBarSettings%>;
@@ -110,5 +111,6 @@
             body.appendChild(boostrapScript);
         })();
     </script>
+</asp:placeholder>
 </body>
 </html>

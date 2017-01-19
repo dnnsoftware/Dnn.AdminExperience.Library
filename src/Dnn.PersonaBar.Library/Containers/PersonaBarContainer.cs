@@ -54,7 +54,7 @@ namespace Dnn.PersonaBar.Library.Containers
 
         public virtual bool Visible => true;
 
-        public virtual void Initialize(UserControl personaBarControl)
+        public virtual void Initialize(TemplateControl personaBarControl)
         {
             
         }
