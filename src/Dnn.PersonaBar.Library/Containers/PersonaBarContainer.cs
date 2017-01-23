@@ -87,7 +87,9 @@ namespace Dnn.PersonaBar.Library.Containers
             settings.Add("buildNumber", Host.CrmVersion.ToString(CultureInfo.InvariantCulture));
             settings.Add("userId", user.UserID);
             settings.Add("avatarUrl", Globals.ResolveUrl(Utilities.GetProfileAvatar(user)));
-            settings.Add("culture", Thread.CurrentThread.CurrentUICulture.Name);
+            // TODO: Review this, why the culture is different when this code is executed from StandaloneContainer.aspx?
+            //settings.Add("culture", Thread.CurrentThread.CurrentUICulture.Name);
+            settings.Add("culture", Thread.CurrentThread.CurrentCulture.Name);
             settings.Add("logOff", Globals.NavigateURL("Logoff"));
             settings.Add("visible", Visible);
             settings.Add("userMode", portalSettings.UserMode.ToString());
