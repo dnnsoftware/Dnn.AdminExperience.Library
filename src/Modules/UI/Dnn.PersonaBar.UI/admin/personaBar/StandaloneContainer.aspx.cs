@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Web.Helpers;
 using System.Web.UI;
 using Dnn.PersonaBar.Library.Containers;
@@ -11,7 +12,6 @@ using DotNetNuke.Framework.JavaScriptLibraries;
 using DotNetNuke.UI.Utilities;
 using DotNetNuke.Web.Client.ClientResourceManagement;
 using Newtonsoft.Json;
-using static System.Web.HttpUtility;
 
 namespace Dnn.PersonaBar.UI.admin.personaBar
 {
@@ -35,7 +35,17 @@ namespace Dnn.PersonaBar.UI.admin.personaBar
             var user = UserController.Instance.GetCurrentUserInfo();
             if (user.UserID <= 0)
             {                
-                Response.Redirect($"~/Login?returnurl={UrlEncode("/admin2")}");
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                Response.End();
+                return;
+            }
+
+            // TODO: check apropiate user roles
+            if (!user.IsSuperUser)
+            {
+                Response.SuppressFormsAuthenticationRedirect = true;
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                Response.End();
                 return;
             }
 
