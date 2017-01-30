@@ -237,6 +237,8 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                 if ($panel.length === 0) {
                     $panel = $("<div class='socialpanel' id='" + panelId + "'></div>");
                     $personaBarPanels.append($panel);
+					if (isRTL)
+						$(document.body).addClass('rtl');
                 }
                 var template = path;
 
