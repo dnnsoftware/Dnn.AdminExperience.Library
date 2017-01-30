@@ -237,8 +237,8 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                 if ($panel.length === 0) {
                     $panel = $("<div class='socialpanel' id='" + panelId + "'></div>");
                     $personaBarPanels.append($panel);
-					if (isRTL)
-						$(document.body).addClass('rtl');
+                    if (isRTL)
+                        $(document.body).addClass('rtl');
                 }
                 var template = path;
 
@@ -804,10 +804,10 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                             $personaBar.animate({ left: 0 }, 200, 'linear', callback);
                         }
                     }
-					$mask.click(function(e) {
+                    $mask.click(function (e) {
                         $showSiteButton.trigger('click', [true]);
-                    });                
-				},
+                    });
+                },
                 function initCustomModules(callback) {
                     util.initCustomModules(callback);
                 }
