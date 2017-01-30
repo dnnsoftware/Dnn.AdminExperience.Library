@@ -1,6 +1,6 @@
 <dotnetnuke type="Package" version="5.0">
     <packages>
-        <package name="Dnn.PersonaBar.UI" type="Library" version="01.01.00">
+        <package name="Dnn.PersonaBar.UI" type="Library" version="01.02.00">
             <friendlyName>Dnn.PersonaBar.UI</friendlyName>
             <description></description>
             <dependencies/>
@@ -34,6 +34,19 @@
                         </resourceFile>
                     </resourceFiles>
                 </component>
+                <component type="File">
+                    <files>
+                        <basePath>Images</basePath>
+                        <file>
+                            <name>icon-personabarapp-16px.png</name>
+                            <sourceFileName>Images/icon-personabarapp-16px.png</sourceFileName>
+                        </file>
+                        <file>
+                            <name>icon-personabarapp-32px.png</name>
+                            <sourceFileName>Images/icon-personabarapp-32px.png</sourceFileName>
+                        </file>
+                    </files>
+                </component>
                 <component type="Config">
                     <config>
                         <configFile>web.config</configFile>
@@ -43,7 +56,9 @@
                                     <node path="/configuration/system.webServer" action="update" targetpath="/configuration/system.webServer/staticContent" collision="ignore">
                                         <staticContent>
                                             <remove fileExtension=".svg" />
+                                            <remove fileExtension=".woff" />
                                             <mimeMap fileExtension=".svg" mimeType="image/svg+xml" />
+                                            <mimeMap fileExtension=".woff" mimeType="font/x-woff" />
                                         </staticContent>
                                     </node>
                                     <node path="/configuration/system.webServer/staticContent/remove[@fileExtension='.svg']" action="remove" />
@@ -53,6 +68,14 @@
                                     <node path="/configuration/system.webServer/staticContent/mimeMap[@fileExtension='.svg']" action="remove" />
                                     <node path="/configuration/system.webServer/staticContent" action="add" key="mimeMap" collision="overwrite">
                                         <mimeMap fileExtension=".svg" mimeType="image/svg+xml" />
+                                    </node>
+                                    <node path="/configuration/system.webServer/staticContent/remove[@fileExtension='.woff']" action="remove" />
+                                    <node path="/configuration/system.webServer/staticContent" action="add" key="remove" collision="overwrite">
+                                        <remove fileExtension=".woff" />
+                                    </node>
+                                    <node path="/configuration/system.webServer/staticContent/mimeMap[@fileExtension='.woff']" action="remove" />
+                                    <node path="/configuration/system.webServer/staticContent" action="add" key="mimeMap" collision="overwrite">
+                                        <mimeMap fileExtension=".woff" mimeType="font/x-woff" />
                                     </node>
                                     <node path="/configuration/system.webServer/modules/add[@name='PersonaBarModule']" action="remove" />
                                     <node path="/configuration/system.webServer/modules" action="update" key="name" collision="overwrite">
@@ -77,6 +100,11 @@
                             <path>Providers\DataProviders\SqlDataProvider</path>
                             <name>Install.SqlDataProvider</name>
                             <version>01.00.00</version>
+                        </script>
+                        <script type="Install">
+                            <path>Providers\DataProviders\SqlDataProvider</path>
+                            <name>01.01.00.SqlDataProvider</name>
+                            <version>01.01.00</version>
                         </script>
                         <script type="UnInstall">
                             <path>Providers\DataProviders\SqlDataProvider</path>

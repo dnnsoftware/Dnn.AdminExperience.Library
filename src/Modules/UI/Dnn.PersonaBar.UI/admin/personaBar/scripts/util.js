@@ -139,24 +139,64 @@ define(['jquery'], function ($) {
                     });
                 },
 
-                notify: function (text, timeout) {
-                    timeout = timeout || 2000;
-                    $('#notification-dialog > p').removeClass().html(text);
-                    $('#notification-dialog').fadeIn(200, 'linear', function () {
-                        setTimeout(function () {
-                            $('#notification-dialog').fadeOut(200, 'linear');
+                notify: function (text, options) {
+                    var self = this;
+                    options = options || {};
+                    var notificationDialog = $('#notification-dialog');
+                    var notificationMessageContainer = $('#notification-message-container');
+                    var notificationMessage = $('#notification-message');
+                    var closeNotification = $('#close-notification');
+                    if (notificationMessageContainer.data('jsp')) {
+                        notificationMessageContainer.data('jsp').destroy();
+                    }
+                    var timeout = typeof options === 'number' ? options : (options.timeout || 2000);
+                    var size = options.size || '';
+                    var clickToClose = options.clickToClose || false;
+                    var closeButtonText = options.closeButtonText || (self.resx && self.resx.PersonaBar.btn_CloseDialog) || "OK";
+                    var type = options.type || 'notify';
+
+                    clearTimeout(self.fadeTimeout);
+
+                    notificationDialog.removeClass();
+                    notificationMessage.removeClass().html(text);
+                    if (size) {
+                        notificationDialog.addClass(size);
+                    }
+                    if (clickToClose !== true) {
+                        notificationDialog.addClass('close-hidden');
+                    }
+                    if (type === 'error') {
+                        notificationDialog.addClass('errorMessage');
+                    }
+                    closeNotification.html(closeButtonText)
+                    closeNotification.on('click', function () {
+                        notificationDialog.fadeOut(200, 'linear');
+                        if (notificationMessageContainer.data('jsp')) {
+                            //waits for fade out before destroying.
+                            setTimeout(function () {
+                                notificationMessageContainer.data('jsp').destroy();
+                            }, 200);
+                        }
+                    });
+                    //add delay for proper execution
+                    setTimeout(function () {
+                        notificationMessageContainer.jScrollPane && notificationMessageContainer.jScrollPane();
+                    }, 0);
+                    notificationDialog.fadeIn(200, 'linear', function () {
+                        if (clickToClose !== true) {
+                            self.fadeTimeout = setTimeout(function () {
+                                if (self.fadeTimeout) {
+                                notificationDialog.fadeOut(200, 'linear');
+                                }
                         }, timeout);
+                        }
                     });
                 },
 
-                notifyError: function (text, timeout) {
-                    timeout = timeout || 2000;
-                    $('#notification-dialog > p').removeClass().addClass('errorMessage').html(text);
-                    $('#notification-dialog').fadeIn(200, 'linear', function () {
-                        setTimeout(function () {
-                            $('#notification-dialog').fadeOut(200, 'linear');
-                        }, timeout);
-                    });
+                notifyError: function (text, options) {
+                    var _options = typeof options === 'number' ? {timeout: options} : options || {};
+                    _options.type = "error";
+                    this.notify(text, _options);
                 },
 
                 localizeErrMessages: function (validator) {

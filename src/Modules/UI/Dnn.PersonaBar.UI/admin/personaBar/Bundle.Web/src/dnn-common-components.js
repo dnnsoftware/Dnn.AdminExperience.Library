@@ -1,7 +1,9 @@
 import Button from "dnn-button";
+import BackToLink from "dnn-back-to-link";
 import Checkbox from "dnn-checkbox";
 import Collapsible from "dnn-collapsible";
 import CollapsibleRow from "dnn-collapsible-row";
+import ContentLoadWrapper from "dnn-content-load-wrapper";
 import Dropdown from "dnn-dropdown";
 import DatePicker from "dnn-date-picker";
 import DropdownWithError from "dnn-dropdown-with-error";
@@ -28,6 +30,7 @@ import SingleLineInput from "dnn-single-line-input";
 import SingleLineInputWithError from "dnn-single-line-input-with-error";
 import SocialPanelBody from "dnn-social-panel-body";
 import SocialPanelHeader from "dnn-social-panel-header";
+import Sortable from "dnn-sortable";
 import * as SvgIcons from "dnn-svg-icons";
 import Switch from "dnn-switch";
 import Tabs from "dnn-tabs";
@@ -39,9 +42,11 @@ import FolderPicker from "dnn-folder-picker";
 
 export {
     Button,
+    BackToLink,
     Checkbox,
     Collapsible,
     CollapsibleRow,
+    ContentLoadWrapper,
     Dropdown,
     DatePicker,
     DropdownWithError,
@@ -68,6 +73,7 @@ export {
     SingleLineInputWithError,
     SocialPanelBody,
     SocialPanelHeader,
+    Sortable,
     SvgIcons,
     Switch,
     Tabs,
