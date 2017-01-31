@@ -5,13 +5,14 @@ define(['jquery'], function ($) {
         init: function (config) {
             var loadTempl;
             var injectBeacon;
+			var isRTL = $(window.parent.document.body).css('direction') == 'rtl';
 
             loadTempl = function (folder, template, wrapper, params, self, cb) {
                 var callbackInit, moduleFolder, scriptFolder, templateSuffix, cssSuffix, initMethod, moduleJs, loadMethod;
 
                 if (!initializedModules[template]) {
                     templateSuffix = '.html';
-                    cssSuffix = '.css';
+                    cssSuffix = isRTL ? '.rtl.css' : '.css';
                     initMethod = 'init';
                     moduleFolder = folder ? 'modules/' + folder + '/' : '';
                     scriptFolder = moduleFolder ? moduleFolder + 'scripts/' : 'scripts/';

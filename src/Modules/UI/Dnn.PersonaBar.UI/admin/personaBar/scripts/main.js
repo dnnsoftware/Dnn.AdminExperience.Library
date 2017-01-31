@@ -15,24 +15,24 @@
         shim: {
             'jquery.hoverintent.min': ['jquery'],
             'jquery.qatooltip': ['jquery.hoverintent.min']
-            
+
         },
         map: {
-			'*': {
-			    'dnn.jquery': ['../../../../../Resources/Shared/Scripts/dnn.jquery'],
-			    'dnn.jquery.extensions': ['../../../../../Resources/Shared/Scripts/dnn.jquery.extensions'],
-			    'dnn.extensions': ['../../../../../Resources/Shared/scripts/dnn.extensions'],
-			    'jquery.tokeninput': ['../../../../../Resources/Shared/components/Tokeninput/jquery.tokeninput'],
-			    'dnn.jScrollBar': ['../../../../../Resources/Shared/scripts/jquery/dnn.jScrollBar'],
-			    'dnn.servicesframework': ['../../../../../js/dnn.servicesframework'],
-			    'dnn.DataStructures': ['../../../../../Resources/Shared/scripts/dnn.DataStructures'],
-			    'jquery.mousewheel': ['../../../../../Resources/Shared/scripts/jquery/jquery.mousewheel'],
-			    'dnn.TreeView': ['../../../../../Resources/Shared/scripts/TreeView/dnn.TreeView'],
-			    'dnn.DynamicTreeView': ['../../../../../Resources/Shared/scripts/TreeView/dnn.DynamicTreeView'],
-			    'dnn.DropDownList': ['../../../../../Resources/Shared/Components/DropDownList/dnn.DropDownList'],
-			    'css.DropDownList': ['css!../../../../../Resources/Shared/components/DropDownList/dnn.DropDownList.css'],
-			    'css.jScrollBar': ['css!../../../../../Resources/Shared/scripts/jquery/dnn.jScrollBar.css']
-	        }
+            '*': {
+                'dnn.jquery': ['../../../../../Resources/Shared/Scripts/dnn.jquery'],
+                'dnn.jquery.extensions': ['../../../../../Resources/Shared/Scripts/dnn.jquery.extensions'],
+                'dnn.extensions': ['../../../../../Resources/Shared/scripts/dnn.extensions'],
+                'jquery.tokeninput': ['../../../../../Resources/Shared/components/Tokeninput/jquery.tokeninput'],
+                'dnn.jScrollBar': ['../../../../../Resources/Shared/scripts/jquery/dnn.jScrollBar'],
+                'dnn.servicesframework': ['../../../../../js/dnn.servicesframework'],
+                'dnn.DataStructures': ['../../../../../Resources/Shared/scripts/dnn.DataStructures'],
+                'jquery.mousewheel': ['../../../../../Resources/Shared/scripts/jquery/jquery.mousewheel'],
+                'dnn.TreeView': ['../../../../../Resources/Shared/scripts/TreeView/dnn.TreeView'],
+                'dnn.DynamicTreeView': ['../../../../../Resources/Shared/scripts/TreeView/dnn.DynamicTreeView'],
+                'dnn.DropDownList': ['../../../../../Resources/Shared/Components/DropDownList/dnn.DropDownList'],
+                'css.DropDownList': ['css!../../../../../Resources/Shared/components/DropDownList/dnn.DropDownList.css'],
+                'css.jScrollBar': ['css!../../../../../Resources/Shared/scripts/jquery/dnn.jScrollBar.css']
+            }
         },
         packages: [{
             name: "codemirror",
@@ -64,7 +64,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
     function ($, ko, moment, ut, sf, cf, extension, persistent, eventEmitter, Gateway) {
         var iframe = window.parent.document.getElementById("personaBar-iframe");
         if (!iframe) return;
-        
+
         var onTouch = "ontouchstart" in document.documentElement;
         // Checking touch screen for second level menu - the above onTouch won't work on windows tablet - IE I didnt test but read about it.
         var isTouch = ('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0);
@@ -86,7 +86,8 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
         var $personaBar = $('#personabar');
         var $showSiteButton = $('#showsite');
         var customModules = [];
-        
+        var isRTL = $(parentBody).css('direction') == 'rtl';
+
         window.requirejs.config({
             paths: {
                 'rootPath': utility.getApplicationRootPath()
@@ -96,9 +97,9 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
         if (config.skin) {
             $personaBar.addClass(config.skin);
         }
-        
+
         var menuViewModel = utility.buildMenuViewModel(config.menuStructure);
-        
+
         // define util -- very important
         var util = {
             sf: sf.init(config.siteRoot, config.tabId, config.antiForgeryToken),
@@ -132,8 +133,8 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                     $personaBarPlaceholder.hide();
                     self.leaveCustomModules();
                     var $activePanel = $('#' + utility.getPanelIdFromPath(activePath));
-                    $activePanel.animate({ left: -860 }, 189, 'linear', function () {
-                        $('.socialpanel').css({ left: -860 }).hide();
+                    $activePanel.animate(isRTL ? { right: -860 } : { left: -860 }, 189, 'linear', function () {
+                        $('.socialpanel').css(isRTL ? { right: -860 } : { left: -860 }).hide();
                         $mask.animate({
                             opacity: 0.0
                         }, 200, function () {
@@ -245,6 +246,8 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                 if ($panel.length === 0) {
                     $panel = $("<div class='socialpanel' id='" + panelId + "'></div>");
                     $personaBarPanels.append($panel);
+                    if (isRTL)
+                        $(document.body).addClass('rtl');
                 }
                 var template = path;
 
@@ -260,7 +263,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                         $mask.animate({
                             opacity: 0.85
                         }, 200, function () {
-                            $panel.show().delay(100).animate({ left: personaBarMenuWidth }, 189, 'linear', function () {
+                            $panel.show().delay(100).animate(isRTL ? { right: personaBarMenuWidth } : { left: personaBarMenuWidth }, 189, 'linear', function () {
                                 inAnimation = false;
                                 $personaBarPlaceholder.show();
                                 self.loadTemplate(folderName, template, $panel, params, function () {
@@ -288,7 +291,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                         inAnimation = true;
                         var $activePanel = $('#' + util.getPanelIdFromPath(activePath));
                         $activePanel.fadeOut("fast", function handleHideCurrentPanel() {
-                            $panel.css({ left: personaBarMenuWidth }).fadeIn("fast", function handleShowSelectedPanel() {
+                            $panel.css(isRTL ? { right: personaBarMenuWidth } : { left: personaBarMenuWidth }).fadeIn("fast", function handleShowSelectedPanel() {
 
                                 savePersistentCallback = function () {
                                     activePath = path;
@@ -354,7 +357,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                     }
                 }
             },
-            findMenuSettings: function(identifier, menuItems) {
+            findMenuSettings: function (identifier, menuItems) {
                 menuItems = menuItems || menuViewModel.menu.menuItems;
                 var settings = null;
                 for (var i = 0; i < menuItems.length; i++) {
@@ -386,7 +389,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
         };
         util = $.extend(util, utility);
         // end define util
-        
+
         function onShownPersonaBar() {
             (function handleResizeWindow() {
                 var evt = document.createEvent('HTMLEvents');
@@ -510,12 +513,12 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                                 $body.addClass('ie');
                                 iframe.style.backgroundColor = "rgba(0,0,0,0.01)"; // IE10 flashing bug
                             }
-                            
+
                             if (config.visible) {
                                 var mouseOnHovermenu = false;
 
                                 (function setupMenu() {
-                                    $(".btn_panel .hovermenu").click(function(e) {
+                                    $(".btn_panel .hovermenu").click(function (e) {
                                         e.stopPropagation();
                                     });
 
@@ -564,7 +567,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                                         }
 
                                         if (!path) return;
-                                        
+
                                         if (moduleName !== undefined) {
                                             params = {
                                                 moduleName: moduleName,
@@ -620,7 +623,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                                         $this.hover(function () {
                                             mouseOnButton = true;
                                             if ($hoverMenu.css('display') === 'none') {
-                                                
+
                                                 if (showMenuHandlers.length > 0) {
                                                     $.each(showMenuHandlers, function (index, item) {
                                                         clearTimeout(item);
@@ -639,7 +642,10 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                                                     if ($hoverMenu.css('display') === 'none' && mouseOnButton) {
                                                         if (!activePath) iframe.style.width = "100%";
 
-                                                        $hoverMenu.css({
+                                                        $hoverMenu.css(isRTL ? {
+                                                            position: 'absolute',
+                                                            right: '-1000px'
+                                                        } : {
                                                             position: 'absolute',
                                                             left: '-1000px'
                                                         });
@@ -651,7 +657,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                                                             $('#' + hoverMenuId).hide();
                                                         });
 
-                                                        
+
                                                         $hoverMenu.show();
                                                         // Fix ie personabar hover menús
                                                         showMenuHandlers.push(setTimeout(function () {
@@ -746,7 +752,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                                                 window.parent.location.reload();
                                             });
                                         };
-                                        util.closePersonaBar(saveBtnEditSettings(function() {
+                                        util.closePersonaBar(saveBtnEditSettings(function () {
                                             toogleUserMode('EDIT');
                                         }));
                                     });
@@ -767,14 +773,14 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                             $avatarImage.css('background-image', 'url(\'' + config.avatarUrl + '\')');
 
                             var retryTimes = 0;
-                            var handleLogoutFunc = function() {
+                            var handleLogoutFunc = function () {
                                 var $logout = $('li#Logout');
                                 if (!$logout.length && retryTimes < 3) {
                                     setTimeout(handleLogoutFunc, 500);
                                     retryTimes++;
                                 }
 
-                                $logout.off('click').click(function(evt) {
+                                $logout.off('click').click(function (evt) {
                                     evt.preventDefault();
                                     evt.stopPropagation();
 
@@ -801,18 +807,31 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                 function showPersonaBar(callback) {
                     var $personaBar = $(".personabar");
                     var $parentBody = $(parentBody);
-                    if ($parentBody.hasClass('dnnEditState')) {
-                        $personaBar.css({ left: 0, 'display': 'block' });
-                        $parentBody.animate({ marginLeft: personaBarMenuWidth }, 1, 'linear', onShownPersonaBar);
-                        callback();
-                    } else {
-                        $personaBar.show();
-                        $personaBar.css({ left: -100 });
-                        $parentBody.animate({ marginLeft: personaBarMenuWidth }, 200, 'linear', onShownPersonaBar);
-                        $personaBar.animate({ left: 0 }, 200, 'linear', callback);
+                    if ($parentBody.css('direction') == 'rtl') {
+                        if ($parentBody.hasClass('dnnEditState')) {
+                            $personaBar.css({ right: 0, 'display': 'block' });
+                            $parentBody.animate({ marginRight: personaBarMenuWidth }, 1, 'linear', onShownPersonaBar);
+                            callback();
+                        } else {
+                            $personaBar.show();
+                            $personaBar.css({ right: -100 });
+                            $parentBody.animate({ marginRight: personaBarMenuWidth }, 200, 'linear', onShownPersonaBar);
+                            $personaBar.animate({ right: 0 }, 200, 'linear', callback);
+                        }
                     }
-
-                    $mask.click(function(e) {
+                    else {
+                        if ($parentBody.hasClass('dnnEditState')) {
+                            $personaBar.css({ left: 0, 'display': 'block' });
+                            $parentBody.animate({ marginLeft: personaBarMenuWidth }, 1, 'linear', onShownPersonaBar);
+                            callback();
+                        } else {
+                            $personaBar.show();
+                            $personaBar.css({ left: -100 });
+                            $parentBody.animate({ marginLeft: personaBarMenuWidth }, 200, 'linear', onShownPersonaBar);
+                            $personaBar.animate({ left: 0 }, 200, 'linear', callback);
+                        }
+                    }
+                    $mask.click(function (e) {
                         $showSiteButton.trigger('click', [true]);
                     });
                 },
@@ -820,7 +839,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                     util.initCustomModules(callback);
                 }
         ],
-        function loadPanelFromPersistedSetting() {            
+        function loadPanelFromPersistedSetting() {
             var pageUrl = window.top.location.href.toLowerCase();
             if (pageUrl.indexOf("skinsrc=") > -1 || pageUrl.indexOf("containersrc=") > -1 || pageUrl.indexOf("dnnprintmode=") > -1) {
                 return;
@@ -832,9 +851,9 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                 util.loadPanel(identifier, {});
             }
         });
-        
+
         if (typeof window.parent.dnn === "undefined" || window.parent.dnn === null) {
-             window.parent.dnn = {};
+            window.parent.dnn = {};
         }
         // Register a PersonaBar object in the parent window global scope
         // to allow easy integration between the site and the persona bar
