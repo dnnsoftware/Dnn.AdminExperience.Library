@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="StandaloneContainer.aspx.cs" Inherits="Dnn.PersonaBar.UI.admin.personaBar.StandaloneContainer" %>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 	<title>PersonaBar</title>
     <meta charset="utf-8" />
@@ -77,8 +77,8 @@
         <img class="notify-check" src="/DesktopModules/Admin/Dnn.PersonaBar/images/icon_exclamation.svg" alt="Warning"/>
         <p></p>
         <div class="buttonpanel">
-            <a id="cancelbtn"></a>
-            <a id="confirmbtn"></a>
+            <a id="cancelbtn" aria-label="Cancel"></a>
+            <a id="confirmbtn" aria-label="Confirm"></a>
         </div>
     </div>
     <div id="notification-dialog" style="display: none;">
@@ -89,13 +89,13 @@
         </div>
 
         <div class="buttonpanel">
-            <button id="close-notification" class="dnn-ui-common-button" role="primary"></button>
+            <button id="close-notification" class="dnn-ui-common-button" role="primary" aria-label="Close"></button>
         </div>
     </div>
     <div id="personaBar-loadingbar" style="display: none;">
         <div></div>
         <span></span>
-        <img id="close-load-error" class="thin-close-x" src="/DesktopModules/Admin/Dnn.PersonaBar/images/x_thin.svg" alt="">
+        <img id="close-load-error" class="thin-close-x" src="/DesktopModules/Admin/Dnn.PersonaBar/images/x_thin.svg" alt="Close">
     </div>
     <!-- end extra -->
 <asp:placeholder runat="server">
