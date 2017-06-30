@@ -41,6 +41,7 @@
             <SourceExclude Include="$(checkoutDirectory)\src\**\obj\**\*" />
             <SourceExclude Include="$(checkoutDirectory)\src\packages\**\*" />
             <SourceExclude Include="$(checkoutDirectory)\src\**\*.metaproj*" />
+            <SourceExclude Include="$(checkoutDirectory)\src\**\*.teamcity" />
             <SourceExclude Include="$(checkoutDirectory)\src\NuGetPackages\**" />
             <SourceExclude Include="$(checkoutDirectory)\src\Dnn.PersonaBar.Library.sln" />
         </ItemGroup>
