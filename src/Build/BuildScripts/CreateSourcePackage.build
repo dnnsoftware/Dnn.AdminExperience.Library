@@ -36,7 +36,8 @@
         <ItemGroup>
             <SourceExclude Include="$(checkoutDirectory)\src\**\*.Web\**\*" />
             <SourceExclude Include="$(checkoutDirectory)\src\.vs\**\*" />
-            <SourceExclude Include="$(checkoutDirectory)\src\**\bin\**\*" />
+            <SourceExclude Include="$(checkoutDirectory)\src\Dnn*\**\bin\**\*" />
+            <SourceExclude Include="$(checkoutDirectory)\src\Modules\**\bin\**\*" />
             <SourceExclude Include="$(checkoutDirectory)\src\**\obj\**\*" />
             <SourceExclude Include="$(checkoutDirectory)\src\packages\**\*" />
             <SourceExclude Include="$(checkoutDirectory)\src\**\*.metaproj*" />
