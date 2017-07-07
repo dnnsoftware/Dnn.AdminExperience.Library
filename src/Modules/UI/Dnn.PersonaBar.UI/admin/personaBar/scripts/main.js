@@ -18,21 +18,21 @@
             
         },
         map: {
-			'*': {
-			    'dnn.jquery': ['../../../../../Resources/Shared/Scripts/dnn.jquery'],
-			    'dnn.jquery.extensions': ['../../../../../Resources/Shared/Scripts/dnn.jquery.extensions'],
-			    'dnn.extensions': ['../../../../../Resources/Shared/scripts/dnn.extensions'],
-			    'jquery.tokeninput': ['../../../../../Resources/Shared/components/Tokeninput/jquery.tokeninput'],
-			    'dnn.jScrollBar': ['../../../../../Resources/Shared/scripts/jquery/dnn.jScrollBar'],
-			    'dnn.servicesframework': ['../../../../../js/dnn.servicesframework'],
-			    'dnn.DataStructures': ['../../../../../Resources/Shared/scripts/dnn.DataStructures'],
-			    'jquery.mousewheel': ['../../../../../Resources/Shared/scripts/jquery/jquery.mousewheel'],
-			    'dnn.TreeView': ['../../../../../Resources/Shared/scripts/TreeView/dnn.TreeView'],
-			    'dnn.DynamicTreeView': ['../../../../../Resources/Shared/scripts/TreeView/dnn.DynamicTreeView'],
-			    'dnn.DropDownList': ['../../../../../Resources/Shared/Components/DropDownList/dnn.DropDownList'],
-			    'css.DropDownList': ['css!../../../../../Resources/Shared/components/DropDownList/dnn.DropDownList.css'],
-			    'css.jScrollBar': ['css!../../../../../Resources/Shared/scripts/jquery/dnn.jScrollBar.css']
-	        }
+            '*': {
+                'dnn.jquery': ['../../../../../Resources/Shared/Scripts/dnn.jquery'],
+                'dnn.jquery.extensions': ['../../../../../Resources/Shared/Scripts/dnn.jquery.extensions'],
+                'dnn.extensions': ['../../../../../Resources/Shared/scripts/dnn.extensions'],
+                'jquery.tokeninput': ['../../../../../Resources/Shared/components/Tokeninput/jquery.tokeninput'],
+                'dnn.jScrollBar': ['../../../../../Resources/Shared/scripts/jquery/dnn.jScrollBar'],
+                'dnn.servicesframework': ['../../../../../js/dnn.servicesframework'],
+                'dnn.DataStructures': ['../../../../../Resources/Shared/scripts/dnn.DataStructures'],
+                'jquery.mousewheel': ['../../../../../Resources/Shared/scripts/jquery/jquery.mousewheel'],
+                'dnn.TreeView': ['../../../../../Resources/Shared/scripts/TreeView/dnn.TreeView'],
+                'dnn.DynamicTreeView': ['../../../../../Resources/Shared/scripts/TreeView/dnn.DynamicTreeView'],
+                'dnn.DropDownList': ['../../../../../Resources/Shared/Components/DropDownList/dnn.DropDownList'],
+                'css.DropDownList': ['css!../../../../../Resources/Shared/components/DropDownList/dnn.DropDownList.css'],
+                'css.jScrollBar': ['css!../../../../../Resources/Shared/scripts/jquery/dnn.jScrollBar.css']
+            }
         },
         packages: [{
             name: "codemirror",
@@ -62,6 +62,14 @@ if (window.parent['personaBarSettings'].debugMode === true) {
 require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../extension',
         '../persistent', '../eventEmitter', '../menuIconLoader', '../gateway', 'domReady!', '../exports/export-bundle'],
     function ($, ko, moment, ut, sf, cf, extension, persistent, eventEmitter, iconLoader, Gateway) {
+
+        setTimeout(function(){
+            var left = $('.dnn-persona-bar-page-header').width() || $('.socialpanelheader').width();
+            $showSiteButton.css({left:left+120});
+            $showSiteButton.show();
+        },2500);
+
+
         var iframe = window.parent.document.getElementById("personaBar-iframe");
         if (!iframe) return;
         
@@ -98,7 +106,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
         }
         
         var menuViewModel = utility.buildMenuViewModel(config.menuStructure);
-        
+
         // define util -- very important
         var util = {
             sf: sf.init(config.siteRoot, config.tabId, config.antiForgeryToken),
@@ -107,13 +115,13 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
             persistent: persistent.init(config, sf),
             inAnimation: inAnimation,
             closePersonaBar: function handleClosePersonarBar(callback, keepSelection) {
+
                 var self = this;
 
                 if ($personaBarPlaceholder.is(":hidden")) {
                     if (typeof callback === 'function') {
                         callback();
                     }
-
                     return;
                 }
 
@@ -383,17 +391,6 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                 }
 
                 return settings;
-            },
-            loadBundleScript: function (path) {
-                if (path.indexOf('cdv=') === -1) {
-                    path += (path.indexOf('?') > -1 ? '&' : '?') + 'cdv=' + config.buildNumber;
-                }
-
-                $.ajax({
-                    dataType: "script",
-                    cache: true,
-                    url: path
-                });
             }
         };
         util = $.extend(util, utility);
