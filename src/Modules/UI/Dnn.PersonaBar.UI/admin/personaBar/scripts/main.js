@@ -62,6 +62,14 @@ if (window.parent['personaBarSettings'].debugMode === true) {
 require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../extension',
         '../persistent', '../eventEmitter', '../menuIconLoader', '../gateway', 'domReady!', '../exports/export-bundle'],
     function ($, ko, moment, ut, sf, cf, extension, persistent, eventEmitter, iconLoader, Gateway) {
+
+        setTimeout(function(){
+            var left = $('.dnn-persona-bar-page-header').width() || $('.socialpanelheader').width();
+            $showSiteButton.css({left:left+120});
+            $showSiteButton.show();
+        },2500);
+
+
         var iframe = window.parent.document.getElementById("personaBar-iframe");
         if (!iframe) return;
         
@@ -98,7 +106,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
         }
         
         var menuViewModel = utility.buildMenuViewModel(config.menuStructure);
-        
+
         // define util -- very important
         var util = {
             sf: sf.init(config.siteRoot, config.tabId, config.antiForgeryToken),
@@ -117,13 +125,13 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
             },
 
             closePersonaBar: function handleClosePersonarBar(callback, keepSelection) {
+
                 var self = this;
 
                 if ($personaBarPlaceholder.is(":hidden")) {
                     if (typeof callback === 'function') {
                         callback();
                     }
-
                     return;
                 }
 
@@ -393,17 +401,6 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                 }
 
                 return settings;
-            },
-            loadBundleScript: function (path) {
-                if (path.indexOf('cdv=') === -1) {
-                    path += (path.indexOf('?') > -1 ? '&' : '?') + 'cdv=' + config.buildNumber;
-                }
-
-                $.ajax({
-                    dataType: "script",
-                    cache: true,
-                    url: path
-                });
             }
         };
         util = $.extend(util, utility);
