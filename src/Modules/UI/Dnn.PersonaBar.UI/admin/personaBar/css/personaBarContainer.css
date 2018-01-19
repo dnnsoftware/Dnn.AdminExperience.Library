@@ -21,3 +21,7 @@ iframe#personaBar-iframe{
 .pb-scroll-wrapper iframe#personaBar-iframe.ipad {
     position: relative !important;
 }
+.personalBarContainer {
+    height: 100vh;
+    position: fixed;
+}
