@@ -52,6 +52,21 @@
             throw err;
         }
     };
+
+    if (!String.prototype.includes) {
+        String.prototype.includes = function(search, start) {
+            'use strict';
+            if (typeof start !== 'number') {
+                start = 0;
+            }
+    
+            if (start + search.length > this.length) {
+                return false;
+            } else {
+                return this.indexOf(search, start) !== -1;
+            }
+        };
+    }
 })();
 
 // Enable React Dev Tools inside the iframe, this should be loaded before React has been loaded
