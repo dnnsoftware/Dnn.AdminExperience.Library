@@ -428,16 +428,44 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                     }
                 }
             },
+            /**
+             * in case path is an array, it is expected to be a sorted list of dependent sources.
+             * 
+             * @param path string|array
+             */
             loadBundleScript: function (path) {
-                if (path.indexOf('cdv=') === -1) {
-                    path += (path.indexOf('?') > -1 ? '&' : '?') + 'cdv=' + config.buildNumber;
+                function formatURL(url) {
+                    if (url.indexOf('cdv=') === -1) {
+                        url += (url.indexOf('?') > -1 ? '&' : '?') + 'cdv=' + config.buildNumber;
+                    }
+                    return url;
                 }
 
-                $.ajax({
-                    dataType: "script",
-                    cache: true,
-                    url: path
-                });
+                function ajax(url) {
+                    var isArray = typeof url === 'object' && url.constructor === Array;
+                    $.ajax({
+                        dataType: "script",
+                        cache: true,
+                        url: isArray && url.length > 0 ? url.pop() : url,
+                        complete: function() {
+                            if(isArray && url.length > 0) {
+                                ajax(url);
+                            }
+                        }
+                    });
+                }
+
+                if(typeof path === 'object' && path.constructor === Array) {
+                    for(var i = 0; i < path.length; i++) {
+                        path[i] = formatURL(path[i]);
+                    }
+                    path.reverse();
+
+                } else {
+                    path = formatURL(path);
+                }
+
+                ajax(path);
             },
             panelViewData: function (panelId, viewData) {
                 var localStorageAllowed = function () {
