@@ -434,38 +434,29 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
              * @param path string|array
              */
             loadBundleScript: function (path) {
-                function formatURL(url) {
-                    if (url.indexOf('cdv=') === -1) {
-                        url += (url.indexOf('?') > -1 ? '&' : '?') + 'cdv=' + config.buildNumber;
-                    }
-                    return url;
-                }
 
-                function ajax(url) {
+                function ajax(url, build) {
                     var isArray = typeof url === 'object' && url.constructor === Array;
                     $.ajax({
                         dataType: "script",
                         cache: true,
+                        data: {
+                            cdv: build
+                        },
                         url: isArray && url.length > 0 ? url.pop() : url,
                         complete: function() {
                             if(isArray && url.length > 0) {
-                                ajax(url);
+                                ajax(url, build);
                             }
                         }
                     });
                 }
 
                 if(typeof path === 'object' && path.constructor === Array) {
-                    for(var i = 0; i < path.length; i++) {
-                        path[i] = formatURL(path[i]);
-                    }
                     path.reverse();
-
-                } else {
-                    path = formatURL(path);
                 }
 
-                ajax(path);
+                ajax(path, config.buildNumber);
             },
             panelViewData: function (panelId, viewData) {
                 var localStorageAllowed = function () {
