@@ -436,7 +436,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
             loadBundleScript: function (path) {
 
                 function ajax(url, build) {
-                    var isArray = typeof url === 'object' && url.constructor === Array;
+                    var isArray = Array.isArray(urls) === true;
                     $.ajax({
                         dataType: "script",
                         cache: true,
@@ -452,7 +452,7 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                     });
                 }
 
-                if(typeof path === 'object' && path.constructor === Array) {
+                if(Array.isArray(path)) {
                     path.reverse();
                 }
 
