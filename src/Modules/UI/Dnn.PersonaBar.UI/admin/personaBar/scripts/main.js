@@ -443,7 +443,6 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                     if(urls.length == 0) {
                         return;
                     }
-                    var isArray = Array.isArray(urls) === true;
                     $.ajax({
                         dataType: "script",
                         cache: true,
