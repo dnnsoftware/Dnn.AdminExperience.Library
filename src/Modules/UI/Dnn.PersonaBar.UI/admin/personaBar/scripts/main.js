@@ -435,7 +435,14 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
              */
             loadBundleScript: function (path) {
 
-                function ajax(url, build) {
+                var urls = path;
+                if(Array.isArray(urls) === false) {
+                    urls = [path];
+                }
+                function ajax(urls, build) {
+                    if(urls.length == 0) {
+                        return;
+                    }
                     var isArray = Array.isArray(urls) === true;
                     $.ajax({
                         dataType: "script",
@@ -443,20 +450,14 @@ require(['jquery', 'knockout', 'moment', '../util', '../sf', '../config', './../
                         data: {
                             cdv: build
                         },
-                        url: isArray && url.length > 0 ? url.pop() : url,
+                        url: urls.pop(),
                         complete: function() {
-                            if(isArray && url.length > 0) {
-                                ajax(url, build);
-                            }
+                            ajax(urls, build);
                         }
                     });
                 }
-
-                if(Array.isArray(path)) {
-                    path.reverse();
-                }
-
-                ajax(path, config.buildNumber);
+                    
+                ajax(urls.reverse(), config.buildNumber);
             },
             panelViewData: function (panelId, viewData) {
                 var localStorageAllowed = function () {
