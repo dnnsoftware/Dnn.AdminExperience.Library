@@ -1,4 +1,6 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/6bsoj5n67m2r9s2b?svg=true)](https://ci.appveyor.com/project/DnnAutomation/dnn-adminexperience-library)
+## Notice: Dnn.AdminExperience.Library has been relocated!
 
-# Dnn.PersonaBar Library
-Installable Persona Bar Library
+As part of the Dnn: Platform v9.2.2 release, we have combined all of the Admin Experience repositories into one. This repository has been archived and made read-only. For the latest source code, issues, and pull requests, please visit the new [AdminExperience repository](https://github.com/dnnsoftware/Dnn.AdminExperience).
+
+If you have any questions, follow us on twitter [@dnn](https://twitter.com/dnn) and let us know!
+
